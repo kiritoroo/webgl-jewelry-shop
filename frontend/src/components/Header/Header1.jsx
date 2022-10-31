@@ -3,11 +3,12 @@ import { StyledHeader } from './Header1.style.'
 
 const Header1 = () => {
   const navbarRef = useRef()
+  let sticky = 0;
   const [headerType, setheaderType] = useState("bottom")
   
   useEffect(() => {
     if (navbarRef && navbarRef.current) {
-      const sticky = navbarRef.current.offsetTop
+      sticky = navbarRef.current.offsetTop
       const onScroll = () => {
         if (window.pageYOffset >= sticky) {
           setheaderType("sticky")
@@ -15,11 +16,19 @@ const Header1 = () => {
           setheaderType("bottom")
         }
       }
+      const onResize = () => {
+        sticky = navbarRef.current.offsetTop
+      }
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
+      window.addEventListener('resize', onResize, { passive: true })
       window.addEventListener('scroll', onScroll, { passive: true })
-      return () => window.removeEventListener('scroll', onScroll)
+      return () => {
+        window.removeEventListener('scroll', onScroll)
+        window.removeEventListener('resize', onResize)
+      }
     }
-  }, [navbarRef])
+  }, [navbarRef, sticky])
 
   return (
     <>

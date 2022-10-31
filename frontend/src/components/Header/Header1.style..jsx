@@ -12,7 +12,7 @@ const handleType = $type => {
 }
 
 const StyledHeader = styled.div`
-  background: #EEE4E1;
+  background: #FFFFFF;
   width: 100%;
   height: 20px;
   padding: 35px 45px;
