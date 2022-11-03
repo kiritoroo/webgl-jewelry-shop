@@ -36,7 +36,7 @@ const Header1 = () => {
         <a href="#" className='fx-underline'>About</a>
         <a href="#" className='fx-underline'>Menu</a>
         <div className="fx-wave">JOHNNY DẢRK & CO.</div>
-        <a href="#" className='fx-underline'>Locations</a>
+        <a href="#" className='fx-underline'>Brand</a>
         <a href="#" className='fx-underline'>Contact</a>
       </StyledHeader>
     </>

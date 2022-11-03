@@ -13,11 +13,13 @@ import {
   useGLTF,
   MeshRefractionMaterial,
   Reflector,
-  OrbitControls
+  OrbitControls,
+  AdaptiveDpr
 } from '@react-three/drei'
 import { EffectComposer,  SSAO, Bloom } from '@react-three/postprocessing'
-import { Resizer, KernelSize } from 'postprocessing'
+import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 import { RGBELoader } from 'three-stdlib'
+import { useLerpMouse } from '../../hooks/useLerpMouse'
 
 const DiamondRing = ({ map, ...props}) => {
   const { nodes, materials } = useGLTF("/model_diamond.glb");
@@ -35,7 +37,7 @@ const DiamondRing = ({ map, ...props}) => {
     aberrationStrength: 0.10,
     ior: 5.0,
     fresnel: 0.5,
-    color: 'white',
+    color: 'pink',
     fastChroma: false
   })
 
@@ -58,7 +60,7 @@ const DiamondRing = ({ map, ...props}) => {
       </Reflector>
 
       {/* Diamond */}
-      <group rotation={[-1.25, 0, 0]} scale={4}>
+      <group rotation={[-1.2, 0, 0]} scale={4}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <mesh
             castShadow
@@ -76,6 +78,13 @@ const DiamondRing = ({ map, ...props}) => {
 useGLTF.preload("/model_diamond.glb");
 
 const Effect = () => {
+  const refSSAO = useRef()
+
+  // useFrame((state) => {
+  //   refSSAO.current.blendMode.setBlendFunction(
+  //     state.performance.current < 1 ? BlendFunction.SKIP : BlendFunction.MULTIPLY
+  //   )
+  // }, [])
 
   return (
     <EffectComposer>
@@ -89,17 +98,33 @@ const Effect = () => {
         luminanceThreshold={1}
         luminanceSmoothing={0.025}
       />
+      {/* <SSAO 
+        ref={refSSAO} 
+        intensity={20} 
+        radius={0.1} 
+        luminanceInfluence={0} 
+        bias={0.035} 
+      /> */}
     </EffectComposer>
   )
 }
 
-function Light() {
-  const ref = useRef()
-  useFrame((_) => (ref.current.rotation.x = _.clock.elapsedTime))
+const Lights = () => {
+  const lights = useRef()
+  const mouse = useLerpMouse()
+  useFrame((state) => {
+    lights.current.rotation.x = (mouse.current.x * Math.PI) / 2
+    lights.current.rotation.y = Math.PI * 0.25 - (mouse.current.y * Math.PI) / 2
+  })
   return (
-    <group ref={ref}>
-      <rectAreaLight width={15} height={100} position={[30, 30, -10]} intensity={5} onUpdate={(self) => self.lookAt(0, 0, 0)} />
-    </group>
+    <>
+      <directionalLight intensity={1} position={[2, 20, 0]} color="red" distance={5} />
+      <spotLight intensity={2} position={[-5, 10, 2]} angle={0.2} penumbra={1} castShadow shadow-mapSize={[2048, 2048]} />
+      <group ref={lights}>
+        <rectAreaLight intensity={2} position={[4.5, 20, -3]} width={40} height={4} onUpdate={(self) => self.lookAt(0, 0, 0)} />
+        <rectAreaLight intensity={2} position={[-10, 20, -10]} width={40} height={4} onUpdate={(self) => self.lookAt(0, 0, 0)} />
+      </group>
+    </>
   )
 }
 
@@ -112,24 +137,26 @@ const HomeScene = () => {
         shadows 
         dpr={[1, 2]}
         camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
+        performance={{ min: 0.1 }}
         onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
+        gl={{ antialias: true }}
       >
         <fog attach="fog" args={["#ffb3be", 5, 50]}/>
         <color attach="background" args={['#FFB4BF']}/>
         <ambientLight intensity={0.5}/>
           <group position={[0, -3, 0]}>
-              <DiamondRing map={texture} position={[0, 4, 0]}/>
+            <DiamondRing map={texture} position={[0, 4, 0]}/>
           </group>
           <spotLight position={[-10, 50,- 100]} castShadow />
           <pointLight position={[-10, -10, -10]} color="pink" intensity={0.2} />
           <pointLight position={[0, -5, 5]} intensity={0.5} />
           <directionalLight position={[0, -5, 0]} color="pink" intensity={2} />
           <Suspense fallback={null}>
-          <Light />
+          <Lights />
           <Environment files='hdr_aerodynamic.hdr' />
         </Suspense>
+        {/* <AdaptiveDpr pixelated /> */}
         <Effect />
-        {/* <OrbitControls makeDefault /> */}
       </Canvas> 
     </>
   )
