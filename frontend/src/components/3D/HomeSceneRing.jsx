@@ -22,9 +22,11 @@ import {
   Center,
   Effects,
   ContactShadows,
-  Loader
+  Loader,
+  Reflector,
+  OrbitControls
 } from '@react-three/drei'
-import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import { EffectComposer,  SSAO, Bloom } from '@react-three/postprocessing'
 import { Resizer, KernelSize } from 'postprocessing'
 import { RGBELoader } from 'three-stdlib'
 import { useControls } from 'leva'
@@ -62,6 +64,23 @@ const DiamondRing = ({ map, ...props}) => {
 
   return (
     <group ref={ref} {...props} dispose={null}>
+      <Reflector
+        resolution={2048}
+        receiveShadow
+        mirror={0}
+        mixBlur={1}
+        mixStrength={0.3}
+        depthScale={1}
+        minDepthThreshold={0.8}
+        maxDepthThreshold={1}
+        position={[1, -4.5, 8]}
+        scale={[2, 2, 1]}
+        rotation={[-Math.PI / 2, 0, Math.PI]}
+        args={[70, 70]}>
+        {(Material, props) => <Material metalness={0.25} color="#eea6b1" roughness={1} {...props} />}
+      </Reflector>
+
+      {/* Ring */}
       <group position={[0.5, -0.04, -0.09]}>
         <group rotation={[-0.15, 0.3, 1.0]} scale={3}>
           <mesh geometry={nodes.diamonds.geometry}>
@@ -99,12 +118,14 @@ const Effect = () => {
         kernelSize={KernelSize.LARGE}
         intensity={0.85}
         levels={9}
-        mipmapBlur
+        mipmapBlur //gpu bug
         width={Resizer.AUTO_SIZE}
         height={Resizer.AUTO_SIZE}
         luminanceThreshold={1}
         luminanceSmoothing={0.025}
       />
+      {/* <SSAO radius={0.2} intensity={10} luminanceInfluence={0.2} color="pink" /> */}
+      {/* <Bloom intensity={0.55} mipmapBlur kernelSize={2} luminanceThreshold={1} luminanceSmoothing={0.25} /> */}
     </EffectComposer>
   )
 
@@ -127,17 +148,28 @@ const Effect = () => {
   // )
 }
 
+function Light() {
+  const ref = useRef()
+  useFrame((_) => (ref.current.rotation.x = _.clock.elapsedTime))
+  return (
+    <group ref={ref}>
+      <rectAreaLight width={15} height={100} position={[30, 30, -10]} intensity={5} onUpdate={(self) => self.lookAt(0, 0, 0)} />
+    </group>
+  )
+}
+
 const HomeScene = () => {
   const texture = useLoader(RGBELoader, '/hdr_aerodynamic.hdr')
 
   return (
     <>
       <Canvas
-        shadows
+        shadows 
+        dpr={[1, 2]}
         camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
         onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
       >
-        <fog attach="fog" args={["white", 0, 50]}/>
+        <fog attach="fog" args={["#FFD5DB", 10, 50]}/>
         {/* <color attach="background" args={['#F7F7F7']}/> */}
         <ambientLight intensity={0.5}/>
         {/* <directionalLight
@@ -152,9 +184,7 @@ const HomeScene = () => {
           shadowCameraTop={10}
           shadowCameraBottom={-10}
         /> */}
-        <pointLight position={[-10, 0, -20]} color="red" intensity={2.5}/>
-        <pointLight position={[0, -10, 0]} intensity={1.5}/>
-        <Suspense fallback={null}>
+        {/* <pointLight position={[15, 15, 15]} intensity={0.8}/> */}
           <group position={[0, -3, 0]}>
             {/* <Center top> */}
               <DiamondRing map={texture} position={[0, 4, 0]}/>
@@ -163,6 +193,12 @@ const HomeScene = () => {
               <RandomizedLight amount={8} radius={10} ambient={0.5} position={[0, 10, -2.5]} bias={0.001} size={3} />
             </AccumulativeShadows> */}
           </group>
+          <spotLight position={[20, 50, -30]} castShadow />
+          <pointLight position={[-10, -10, -10]} color="pink" intensity={3} />
+          <pointLight position={[0, -5, 5]} intensity={0.5} />
+          <directionalLight position={[0, -5, 0]} color="pink" intensity={2} />
+          <Suspense fallback={null}>
+          <Light />
           <Environment files='hdr_aerodynamic.hdr' />
           {/* <Shadow opacity={0.2} scale={[9, 1.5, 1]} position={[0, -8, 0]}/> */}
           <ContactShadows
@@ -180,6 +216,7 @@ const HomeScene = () => {
           <shadowMaterial attach="material" transparent opacity={0.4} />
         </mesh> */}
         {/* <Effect /> */}
+        {/* <OrbitControls makeDefault /> */}
       </Canvas> 
       {/* <Loader /> */}
     </>

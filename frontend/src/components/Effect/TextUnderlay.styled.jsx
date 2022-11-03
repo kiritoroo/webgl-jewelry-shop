@@ -11,11 +11,11 @@ const StyledTextUnderlay = styled.div`
 
   > div:nth-child(1) {
     position: absolute;
-    color: #CB6B56;
+    color: #f58787;
     top: 40%;
     left: 30%;
     transform: translateY(-70%);
-    opacity: 0.2;
+    opacity: 0.5;
     font-weight: 600;
     font-size: 25rem;
     line-height: 100%;
@@ -48,7 +48,7 @@ const StyledTextUnderlay = styled.div`
         font-weight: 600;
         line-height: 4rem;
         font-size: 8rem;
-        letter-spacing: 1rem;
+        letter-spacing: 0.5rem;
         white-space: inherit;
         /* font-family: Cormorant Garamond; */
         /* font-family: 'Archivo', sans-serif; */
@@ -61,7 +61,7 @@ const StyledTextUnderlay = styled.div`
           font-weight: 600;
           line-height: 4rem;
           font-size: 4rem;
-          letter-spacing: 1rem;
+          letter-spacing: 0.2rem;
         }
       }
 

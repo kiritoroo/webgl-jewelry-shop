@@ -1,5 +1,5 @@
 import Header from './components/Header/Header1'
-import HomeScene from './components/3D/HomeScene'
+import HomeScene from './components/3D/HomeSceneDiamond'
 import TextUnderlay from './components/Effect/TextUnderlay'
 
 function App() {
@@ -7,11 +7,11 @@ function App() {
   return (
     <div>
       <Header />
-      <section style={{ height: '100vh', background: '#E6BFBE' }}>
+      <section style={{ height: '100vh', background: '#FFAAB5' }}>
         <TextUnderlay />
         <HomeScene />
       </section>
-      <section style={{ height: '100vh', background: 'lightpink' }}/>
+      <section style={{ height: '100vh', background: '#FFFFFF' }}/>
       <section style={{ height: '100vh', background: 'lightblue' }}/>
       <section style={{ height: '100vh', background: 'lightgreen' }}/>
     </div>

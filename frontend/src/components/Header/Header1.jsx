@@ -35,7 +35,7 @@ const Header1 = () => {
       <StyledHeader ref={navbarRef} $type={headerType}>
         <a href="#">About</a>
         <a href="#">Menu</a>
-        <div>JOHNY DẢRK & CO.</div>
+        <div>JOHNNY DẢRK & CO.</div>
         <a href="#">Locations</a>
         <a href="#">Contact</a>
       </StyledHeader>

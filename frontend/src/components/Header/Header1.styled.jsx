@@ -35,6 +35,16 @@ const StyledHeader = styled.div`
     font-family: Cormorant Garamond;
     padding-left: 5%;
     padding-right: 5%;
+    pointer-events: none;
+    user-select: none;
+
+    @media screen and (max-width: 1200px) {
+      transform: translateY(-10%);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 100%;
+      letter-spacing: 0.05em;
+    }
   }
 
   > a {
