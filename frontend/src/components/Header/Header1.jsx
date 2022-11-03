@@ -33,11 +33,11 @@ const Header1 = () => {
   return (
     <>
       <StyledHeader ref={navbarRef} $type={headerType}>
-        <a href="#">About</a>
-        <a href="#">Menu</a>
-        <div>JOHNNY DẢRK & CO.</div>
-        <a href="#">Locations</a>
-        <a href="#">Contact</a>
+        <a href="#" className='fx-underline'>About</a>
+        <a href="#" className='fx-underline'>Menu</a>
+        <div className="fx-wave">JOHNNY DẢRK & CO.</div>
+        <a href="#" className='fx-underline'>Locations</a>
+        <a href="#" className='fx-underline'>Contact</a>
       </StyledHeader>
     </>
   )

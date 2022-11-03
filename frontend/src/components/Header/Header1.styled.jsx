@@ -48,12 +48,13 @@ const StyledHeader = styled.div`
   }
 
   > a {
-    font-family: "Roboto", sans-serif;
+    font-family: Cormorant Garamond;
     letter-spacing: 3px;
     font-size: 0.8em;
     padding-left: 5%;
     padding-right: 5%;
     text-transform: uppercase;
+    text-decoration: none;
   }
 `;
 
