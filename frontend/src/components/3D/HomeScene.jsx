@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+// import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import React, { Suspense, useLayoutEffect, useEffect, useMemo, useRef, useState } from 'react'
@@ -20,14 +20,16 @@ import {
   softShadows,
   RandomizedLight,
   Center,
-  Effects
+  Effects,
+  ContactShadows,
+  Loader
 } from '@react-three/drei'
-// import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { Resizer, KernelSize } from 'postprocessing'
 import { RGBELoader } from 'three-stdlib'
 import { useControls } from 'leva'
 
-extend({ EffectComposer, RenderPass, UnrealBloomPass })
+// extend({ EffectComposer, RenderPass, UnrealBloomPass })
 
 const DiamondRing = ({ map, ...props}) => {
   const { nodes, materials } = useGLTF("/model_diamond-ring1.glb");
@@ -36,7 +38,7 @@ const DiamondRing = ({ map, ...props}) => {
   const [rEuler, rQuaternion] = useMemo(() => [new THREE.Euler(), new THREE.Quaternion()], [])
 
   useFrame(({ mouse }) => {
-    rEuler.set((mouse.y * viewport.height) / 20, (mouse.x * viewport.width) / 50, 0)
+    rEuler.set((mouse.y * viewport.height) / 80, (mouse.x * viewport.width) / 50, 0)
     ref.current.quaternion.slerp(rQuaternion.setFromEuler(rEuler), 0.1)
   });
 
@@ -61,7 +63,7 @@ const DiamondRing = ({ map, ...props}) => {
   return (
     <group ref={ref} {...props} dispose={null}>
       <group position={[0.5, -0.04, -0.09]}>
-        <group rotation={[-0.1, 0.1, 0.9]} scale={3}>
+        <group rotation={[-0.15, 0.3, 1.0]} scale={3}>
           <mesh geometry={nodes.diamonds.geometry}>
             <MeshRefractionMaterial envMap={map} {...configDiamond} toneMapped={false}/>
           </mesh>
@@ -91,20 +93,20 @@ useGLTF.preload("/model_diamond-ring1.glb");
 const Effect = () => {
   // const { size } = useThree();
 
-  // return (
-  //   <EffectComposer>
-  //     <Bloom
-  //       kernelSize={KernelSize.LARGE}
-  //       intensity={0.85}
-  //       levels={9}
-  //       mipmapBlur
-  //       width={Resizer.AUTO_SIZE}
-  //       height={Resizer.AUTO_SIZE}
-  //       luminanceThreshold={1}
-  //       luminanceSmoothing={0.025}
-  //     />
-  //   </EffectComposer>
-  // )
+  return (
+    <EffectComposer>
+      <Bloom
+        kernelSize={KernelSize.LARGE}
+        intensity={0.85}
+        levels={9}
+        mipmapBlur
+        width={Resizer.AUTO_SIZE}
+        height={Resizer.AUTO_SIZE}
+        luminanceThreshold={1}
+        luminanceSmoothing={0.025}
+      />
+    </EffectComposer>
+  )
 
   // const configDebug = useControls({
   //   threshold: { value: 1, min: 0, max: 5, step: 0.1 },
@@ -118,11 +120,11 @@ const Effect = () => {
     radius: 0.5
   })
 
-  return (
-    <Effects disableGamma>
-      <unrealBloomPass {...configBloom} />
-    </Effects>
-  )
+  // return (
+  //   <Effects>
+  //     <unrealBloomPass {...configBloom} />
+  //   </Effects>
+  // )
 }
 
 const HomeScene = () => {
@@ -132,11 +134,11 @@ const HomeScene = () => {
     <>
       <Canvas
         shadows
-        camera={{ position: [0, 0, 15], near: 10, far: 20, fov: 50 }}
+        camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
         onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
       >
         <fog attach="fog" args={["white", 0, 50]}/>
-        <color attach="background" args={['#F0F0F0']}/>
+        {/* <color attach="background" args={['#F7F7F7']}/> */}
         <ambientLight intensity={0.5}/>
         {/* <directionalLight
           castShadow
@@ -162,7 +164,16 @@ const HomeScene = () => {
             </AccumulativeShadows> */}
           </group>
           <Environment files='hdr_aerodynamic.hdr' />
-          <Shadow opacity={0.2} scale={[9, 1.5, 1]} position={[0, -8, 0]}/>
+          {/* <Shadow opacity={0.2} scale={[9, 1.5, 1]} position={[0, -8, 0]}/> */}
+          <ContactShadows
+            rotation-x={Math.PI / 2}
+            position={[0, -4.5, 0]}
+            opacity={1}
+            width={20}
+            height={20}
+            blur={2}
+            far={4.5}
+          />
         </Suspense>
         {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3.5, 0]} receiveShadow>
           <planeBufferGeometry attach="geometry" args={[100, 100]} />
@@ -170,6 +181,7 @@ const HomeScene = () => {
         </mesh> */}
         {/* <Effect /> */}
       </Canvas> 
+      {/* <Loader /> */}
     </>
   )
 }

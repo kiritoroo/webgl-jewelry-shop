@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { StyledHeader } from './Header1.style.'
+import { StyledHeader } from './Header1.styled'
 
 const Header1 = () => {
   const navbarRef = useRef()
@@ -35,6 +35,7 @@ const Header1 = () => {
       <StyledHeader ref={navbarRef} $type={headerType}>
         <a href="#">About</a>
         <a href="#">Menu</a>
+        <div>JOHNY DẢRK & CO.</div>
         <a href="#">Locations</a>
         <a href="#">Contact</a>
       </StyledHeader>
