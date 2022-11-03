@@ -43,7 +43,6 @@ const StyledTextUnderlay = styled.div`
       color: #ffffff;
 
       > div:nth-child(1) {
-        white-space: pre;
         margin-bottom: 2.5rem;
         font-weight: 600;
         line-height: 4rem;
