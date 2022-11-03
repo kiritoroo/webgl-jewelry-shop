@@ -1,6 +1,12 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+a {
+  pointer-events: all;
+  text-decoration: none;
 }
 
 /* Underline effect */
@@ -16,7 +22,7 @@ body {
   display: block;
   width: 97%;
   height: 2px;
-  background-color: #FFB4BF;
+  background-color: #DEDEDE;
   transform: scaleX(0%);
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }

@@ -13,7 +13,7 @@ const TextUnderlay = () => {
             UNIQUE JEWELRY
           </div>
           <div>
-            Custom your unique ring 
+            Custom your unique jewerly. 
           </div>
         </div>
       </div>

@@ -56,7 +56,7 @@ const DiamondRing = ({ map, ...props}) => {
         scale={[2, 2, 1]}
         rotation={[-Math.PI / 2, 0, Math.PI]}
         args={[70, 70]}>
-        {(Material, props) => <Material metalness={0.25} color="#eea6b1" roughness={1} {...props} />}
+        {(Material, props) => <Material metalness={0.25} color="#fdf9f9" roughness={1} {...props} />}
       </Reflector>
 
       {/* Diamond */}
@@ -128,7 +128,7 @@ const Lights = () => {
   )
 }
 
-const HomeScene = () => {
+const HomeScene = ({ setIsLoading, isRender, setIsRender }) => {
   const texture = useLoader(RGBELoader, '/hdr_aerodynamic.hdr')
 
   return (
@@ -137,21 +137,28 @@ const HomeScene = () => {
         shadows 
         dpr={[1, 2]}
         camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
-        performance={{ min: 0.1 }}
+        frameloop= { isRender ? "never" : "never" }
         onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
         gl={{ antialias: true }}
       >
-        <fog attach="fog" args={["#ffb3be", 5, 50]}/>
-        <color attach="background" args={['#FFB4BF']}/>
+        <fog attach="fog" args={["rgb(255, 203, 211)", 5, 50]}/>
+        <color attach="background" args={['#FFCBD3']}/>
         <ambientLight intensity={0.5}/>
+        <Suspense fallback={null}>
           <group position={[0, -3, 0]}>
-            <DiamondRing map={texture} position={[0, 4, 0]}/>
+            <DiamondRing 
+              map={texture} 
+              position={[0, 4, 0]}
+              onLoad={setTimeout(() => {
+                setIsRender(true)
+                setIsLoading(false)
+              }, 5000)}
+            />
           </group>
           <spotLight position={[-10, 50,- 100]} castShadow />
           <pointLight position={[-10, -10, -10]} color="pink" intensity={0.2} />
           <pointLight position={[0, -5, 5]} intensity={0.5} />
           <directionalLight position={[0, -5, 0]} color="pink" intensity={2} />
-          <Suspense fallback={null}>
           <Lights />
           <Environment files='hdr_aerodynamic.hdr' />
         </Suspense>

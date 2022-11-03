@@ -1,22 +1,29 @@
+import React, { useState } from 'react'
 import Header from './components/Header/Header1'
 import HomeScene from './components/3D/HomeSceneDiamond'
 import TextUnderlay from './components/Effect/TextUnderlay'
 import CursorEffect from './components/Effect/CursorEffect'
 import LoadingCube from './components/Loading/LoadingCube'
+import ScrollSection from './components/Effect/ScrollSection'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRender, setIsRender] = useState(false);
 
   return (
     <>
-      <Header />
-      <section style={{ height: '100vh', background: '#FFAAB5' }}>
-        <LoadingCube />
-        {/* <TextUnderlay /> */}
-        {/* <HomeScene /> */}
+      <Header setIsRender={setIsRender} />
+
+      <section style={{ height: '100vh', background: '#DEDEDE' }}>
+        { isLoading ? <LoadingCube /> : null }
+        
+        <TextUnderlay />
+        <HomeScene setIsLoading={setIsLoading} isRender={isRender} setIsRender={setIsRender}/>
       </section>
-      <section style={{ height: '100vh', background: '#FFFFFF' }}/>
-      <section style={{ height: '100vh', background: 'lightblue' }}/>
-      <section style={{ height: '100vh', background: 'lightgreen' }}/>
+      
+      <section id='about' style={{ height: '100vh', background: '#FFFFFF' }}>
+        <ScrollSection />
+      </section>
       <CursorEffect />
     </>
   )

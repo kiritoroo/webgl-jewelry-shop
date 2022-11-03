@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { StyledHeader } from './Header1.styled'
+import ScrollSection from '../Effect/ScrollSection'
 
-const Header1 = () => {
+const Header1 = ({ setIsRender }) => {
   const navbarRef = useRef()
   let sticky = 0;
   const [headerType, setheaderType] = useState("bottom")
@@ -12,8 +13,12 @@ const Header1 = () => {
       const onScroll = () => {
         if (window.pageYOffset >= sticky) {
           setheaderType("sticky")
+          setIsRender(false)
         } else {
           setheaderType("bottom")
+          setTimeout(() => {
+            setIsRender(true)
+          }, 2000)
         }
       }
       const onResize = () => {
@@ -33,7 +38,16 @@ const Header1 = () => {
   return (
     <>
       <StyledHeader ref={navbarRef} $type={headerType}>
-        <a href="#" className='fx-underline'>About</a>
+        <a
+          href="#about" 
+          className='fx-underline'
+          onClick={(e) => {
+            e.preventDefault()
+            window.location.replace('/#about')
+          }}
+        >
+          About
+        </a>
         <a href="#" className='fx-underline'>Menu</a>
         <div className="fx-wave">JOHNNY DẢRK & CO.</div>
         <a href="#" className='fx-underline'>Brand</a>

@@ -14,32 +14,32 @@ const handleType = $type => {
 const StyledHeader = styled.div`
   background: #FFFFFF;
   width: 100%;
-  height: 20px;
-  padding: 35px 10px;
+  height: 50px;
+  padding: 10px 10px;
   overflow: hidden;
   text-align: center;
   ${({ $type }) => handleType($type)};
   bottom: 0;
-  z-index: 1;
+  z-index: 9999999999;
   margin: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 
   > div {
-    transform: translateY(-50%);
+    padding: 10px 5%;
+    transform: translateY(-10%);
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 100%;
     letter-spacing: 0.05em;
     font-family: Cormorant Garamond;
-    padding-left: 5%;
-    padding-right: 5%;
     pointer-events: none;
     user-select: none;
 
     @media screen and (max-width: 1200px) {
-      transform: translateY(-10%);
+      transform: translateY(-5%);
       font-size: 1rem;
       font-weight: 400;
       line-height: 100%;
@@ -50,7 +50,7 @@ const StyledHeader = styled.div`
   > a {
     font-family: Cormorant Garamond;
     letter-spacing: 3px;
-    font-size: 0.8em;
+    font-size: 1.0em;
     padding-left: 5%;
     padding-right: 5%;
     text-transform: uppercase;

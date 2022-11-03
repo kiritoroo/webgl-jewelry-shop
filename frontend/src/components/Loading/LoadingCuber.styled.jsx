@@ -8,6 +8,8 @@ const StyledLoadingCube = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #FFFFFF;
+  z-index: 99999;
 `
 
 const StyledLoadingTitle = styled.div`
@@ -34,7 +36,7 @@ const StyledCubeWrapper = styled.div`
     height: 30px;
     display: block;
     position: absolute;
-    border: 0.2rem solid #FFFFFF;
+    border: 0.2rem solid #FA989E;
     line-height: 30px;
     text-align: center;
     font-size: 30px;
