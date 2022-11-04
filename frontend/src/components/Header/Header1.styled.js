@@ -31,7 +31,7 @@ const StyledHeader = styled.div`
     padding: 10px 5%;
     transform: translateY(-10%);
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 100%;
     letter-spacing: 0.05em;
     font-family: Cormorant Garamond;
@@ -41,7 +41,7 @@ const StyledHeader = styled.div`
     @media screen and (max-width: 1200px) {
       transform: translateY(-5%);
       font-size: 1rem;
-      font-weight: 400;
+      font-weight: 600;
       line-height: 100%;
       letter-spacing: 0.05em;
     }
@@ -51,11 +51,27 @@ const StyledHeader = styled.div`
     font-family: Cormorant Garamond;
     letter-spacing: 3px;
     font-size: 1.0em;
+    font-weight: 500;
     padding-left: 5%;
     padding-right: 5%;
+    padding-bottom: 10px;
     text-transform: uppercase;
     text-decoration: none;
     color: #000000;
+    transition: color 0.2s ease;
+
+    :hover {
+      color: #FFB4BF;
+      font-weight: 500;
+    }
+
+    @media screen and (max-width: 1200px) {
+      letter-spacing: 2px;
+      font-size: 0.8em;
+      font-weight: 500;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
   }
 `;
 

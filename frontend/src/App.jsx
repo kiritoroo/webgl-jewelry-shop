@@ -7,6 +7,7 @@ import LoadingCube from './components/Loading/LoadingCube'
 import ScrollSection from './components/2D/Home/ScrollSection'
 import ProductSection from './components/2D/Home/ProductSection'
 import TextMarquee from './components/Effect/TextMarquee'
+import ImageSlide from './components/Effect/ImageSlide'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,18 +21,20 @@ function App() {
         { isLoading ? <LoadingCube /> : null }
         
         <TextUnderlay />
-        {/* <HomeScene setIsLoading={setIsLoading} isRender={isRender} setIsRender={setIsRender}/> */}
+        <HomeScene setIsLoading={setIsLoading} isRender={isRender} setIsRender={setIsRender}/>
       </section>
 
 
-      <section id='product' style={{ height: '100vh', background: 'lightgreen' }}>
-        <ProductSection />
+      <section id='about' style={{ height: '100vh', background: 'lightgreen' }}>
+        {/* <ProductSection /> */}
+        <ScrollSection />
       </section>
       
       <TextMarquee />
 
-      <section id='about' style={{ height: '100vh', background: '#FFFFFF' }}>
-        {/* <ScrollSection /> */}
+      <section id='product' style={{ height: '100vh', background: '#FFFFFF' }}>
+        <ImageSlide />
+        {/* <TextMarquee /> */}
       </section>
       <CursorEffect />
     </>

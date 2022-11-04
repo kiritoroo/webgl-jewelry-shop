@@ -8,6 +8,7 @@ const StyledMarquee = styled.div`
   overflow: hidden;
   position: relative;
   width: 100vw;
+  z-index: 2;
 
   ::before, ::after {
     background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
@@ -15,7 +16,7 @@ const StyledMarquee = styled.div`
     height: 100px;
     position: absolute;
     width: 400px;
-    z-index: 2;
+    z-index: 3;
   }
 
   ::after {

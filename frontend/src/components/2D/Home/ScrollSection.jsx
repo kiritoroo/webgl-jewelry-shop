@@ -12,7 +12,7 @@ const Item = ({ url, scale, ...props }) => {
   useFrame((state, delta) => {
     ref.current.position.y = THREE.MathUtils.damp(ref.current.position.y, visible.current ? 0 : -height / 2 + 1, 4, delta)
     ref.current.material.zoom = THREE.MathUtils.damp(ref.current.material.zoom, visible.current ? 1 : 1.5, 4, delta)
-    ref.current.material.grayscale = THREE.MathUtils.damp(ref.current.material.grayscale, hovered ? 0 : 1, 4, delta)
+    ref.current.material.grayscale = THREE.MathUtils.damp(ref.current.material.grayscale, hovered ? -0.5 : 1, 5, delta)
   })
   
   return (
@@ -33,7 +33,7 @@ const Items = () => {
   
   return (
     <Scroll>
-      <Item 
+      <Item
         url="/img_ring1.webp"
         scale={[w / 2.5, w / 2.5, 1]}
         position={[-w / 6, 0, 0]} 
@@ -69,8 +69,8 @@ const Items = () => {
 const ScrollSection = () => {
   return (
     <Canvas orthographic camera={{ zoom: 80 }} gl={{ alpha: false, antialias: false, stencil: false, depth: false }} dpr={[1, 1.5]}>
-      <color attach="background" args={['#f0f0f0']} />
-      <ScrollControls damping={6} pages={3}>
+      <color attach="background" args={['#ffffff']} />
+      <ScrollControls damping={4} pages={3}>
         <Items />
         <Scroll html style={{ width: '100%' }}>
           <StyledContent style={{ top: `50vh`, right: '10vw' }}>eternity</StyledContent>
