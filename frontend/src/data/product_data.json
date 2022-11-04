@@ -1,0 +1,38 @@
+[
+  {
+    "pid": "ring1",
+    "title": "Paper Trading",
+    "category": "UI/UX",
+    "description": "A concept paper trading app with simple and minimal user interface."
+  },
+  {
+    "pid": "ring2",
+    "title": "Calorifit",
+    "category": "WebDev",
+    "description": "A simple calorie tracker built on react, made for simplicity and to showcase minimal User Interface in a project."
+  },
+  {
+    "pid": "ring3",
+    "title": "E-bike Page",
+    "category": "UI/UX",
+    "description": "An concept landing page based on a 3d e-bike model by Ashok Yeli."
+  },
+  {
+    "pid": "ring4",
+    "title": "Brand Landing Page",
+    "category": "website",
+    "description": "A brand landing page with minimal UI and smooth scroll effects and animations."
+  },
+  {
+    "pid": "ring5",
+    "title": "e-shop concept",
+    "category": "UI/UX",
+    "description": "UI design for a e-commerce concept app based on light theme and soft shadows."
+  },
+  {
+    "pid": "ring6",
+    "title": "linkedin dark mode",
+    "category": "UI/UX",
+    "description": "Just my view on how linkedin should work on their dark mode feature. Don't know why it did took so long for linkedin to roll dark theme."
+  }
+]

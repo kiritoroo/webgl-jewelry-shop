@@ -55,6 +55,7 @@ const StyledHeader = styled.div`
     padding-right: 5%;
     text-transform: uppercase;
     text-decoration: none;
+    color: #000000;
   }
 `;
 

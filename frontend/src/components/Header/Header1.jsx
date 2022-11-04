@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { StyledHeader } from './Header1.styled'
-import ScrollSection from '../Effect/ScrollSection'
 
 const Header1 = ({ setIsRender }) => {
   const navbarRef = useRef()
@@ -48,7 +47,16 @@ const Header1 = ({ setIsRender }) => {
         >
           About
         </a>
-        <a href="#" className='fx-underline'>Menu</a>
+        <a
+          href="#product" 
+          className='fx-underline'
+          onClick={(e) => {
+            e.preventDefault()
+            window.location.replace('/#product')
+          }}
+        >
+          Product
+        </a>
         <div className="fx-wave">JOHNNY DẢRK & CO.</div>
         <a href="#" className='fx-underline'>Brand</a>
         <a href="#" className='fx-underline'>Contact</a>

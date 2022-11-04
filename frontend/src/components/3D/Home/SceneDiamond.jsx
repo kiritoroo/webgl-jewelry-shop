@@ -19,7 +19,7 @@ import {
 import { EffectComposer,  SSAO, Bloom } from '@react-three/postprocessing'
 import { Resizer, KernelSize, BlendFunction } from 'postprocessing'
 import { RGBELoader } from 'three-stdlib'
-import { useLerpMouse } from '../../hooks/useLerpMouse'
+import { useLerpMouse } from '../../../hooks/useLerpMouse'
 
 const DiamondRing = ({ map, ...props}) => {
   const { nodes, materials } = useGLTF("/model_diamond.glb");
@@ -137,7 +137,7 @@ const HomeScene = ({ setIsLoading, isRender, setIsRender }) => {
         shadows 
         dpr={[1, 2]}
         camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
-        frameloop= { isRender ? "never" : "never" }
+        frameloop= { isRender ? "always" : "never" }
         onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
         gl={{ antialias: true }}
       >

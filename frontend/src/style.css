@@ -22,7 +22,7 @@ a {
   display: block;
   width: 97%;
   height: 2px;
-  background-color: #DEDEDE;
+  background-color: #FFB4BF;
   transform: scaleX(0%);
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
