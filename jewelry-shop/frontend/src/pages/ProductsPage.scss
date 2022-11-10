@@ -44,6 +44,8 @@
   letter-spacing: 0.15em;
   color: black;
   transform: translateX(-52%);
+  transition: color 0.5s ease;
+
   span {
     position: absolute;
     display: block;
@@ -56,6 +58,7 @@
     z-index: -1;
   }
   &:hover {
+    color: #FFB6C2;
     span {
       width: 225%;
       height: 562.5px;

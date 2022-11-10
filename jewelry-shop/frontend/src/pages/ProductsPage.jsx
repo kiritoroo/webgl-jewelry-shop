@@ -3,20 +3,18 @@ import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ScrollControls, Scroll, useScroll,Preload, Image as R3fImage } from '@react-three/drei'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useQuery } from 'react-query'
 import { NavLink, Link } from 'react-router-dom'
-import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import CircleButton from '../components/button/CircleButton'
 import Loading from '../components/layout/Loading'
 
-import './ProductsPage.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../redux/product/productActions'
 
-const getProducts = async () => {
-  return await axios.get(`/api/products`)
-    .then((res) => res.data )
-    .catch((err) => { console.log(err) })
-}
+import './ProductsPage.scss'
 
 const trans = { duration: 1, ease: "easeInOut" };
 const variants = {
@@ -108,15 +106,20 @@ function Products({ products }) {
 }
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState()
-  const [isLoading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+  const { loading, products, error } = useSelector(state => state.products)
 
-  useQuery('products', getProducts, {
-    onSuccess: (data) => { 
-      setProducts(data.products)
-      setLoading(false)
-    }
-  })
+  // const notify_success = () => toast.success('Loading products success !');
+  // const notify_error = () => toast.error('Loading products failed !');
+
+  useEffect(() => {
+
+    dispatch(getProducts())
+
+    // if (error) { notify_error() }
+    // if (!loading) { notify_success() }
+
+  }, [dispatch])
 
   const offsetWidth = 100;
 
@@ -124,7 +127,7 @@ const ProductsPage = () => {
     <React.Fragment>
 
       <AnimatePresence mode='wait' initial={false}>
-        { isLoading ? <Loading /> : null }
+        { loading ? <Loading /> : null }
       </AnimatePresence>
 
       <CircleButton to="/" />
@@ -135,7 +138,7 @@ const ProductsPage = () => {
         exit="exit"
         variants={variants}
       >
-        { products != undefined &&
+        { !loading &&
         <Canvas gl={{ antialias: false }} dpr={[1, 1.5]}>
           <Suspense fallback={null}>
             <ScrollControls 
@@ -177,6 +180,20 @@ const ProductsPage = () => {
           </Suspense>
         </Canvas> }
       </motion.div>
+
+      {/* <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      /> */}
+
     </React.Fragment>
   )
 }

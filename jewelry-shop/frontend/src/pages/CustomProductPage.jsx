@@ -1,34 +1,28 @@
-import React, { useState } from 'react'
-import { useQuery } from 'react-query'
+import React, { Suspense, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { AnimatePresence } from 'framer-motion'
 
 import CircleButton from '../components/button/CircleButton'
 import ProductScene from '../components/scene/ProductScene'
 import Loading from '../components/layout/Loading'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductDetails } from '../redux/product/productActions'
+
 import './CustomProductPage.scss'
-
-const getProduct = async ({ queryKey }) => {
-  const [_, prodId] = queryKey
-  return await axios.get(`/api/product/${prodId}`)
-    .then((res) => res.data )
-    .catch((err) => { console.log(err) })
-}
-
 
 const CustomProductPage = () => {
   const { prodId } = useParams()
-  const [product, setProduct] = useState()
   const [isLoading, setLoading] = useState(true)
   const [isRender, setRender] = useState(false)
 
-  useQuery(['product', prodId], getProduct, {
-    onSuccess: (data) => {
-      setProduct(data.product)
-    }
-  })
+  const dispatch = useDispatch();
+
+  const { loading, product, error } = useSelector(state => state.productDetals)
+  
+  useEffect(() => {
+    dispatch(getProductDetails(prodId))
+  }, [dispatch])
 
   return (
     <React.Fragment>
@@ -37,17 +31,19 @@ const CustomProductPage = () => {
         { isLoading ? <Loading /> : null }
       </AnimatePresence>
       
-      { product ? (
+      { !loading && (
         <div className='CustomePage'>
           <CircleButton to="/products"/>
-          <ProductScene 
-            product={product}
-            setLoading={setLoading}
-            isRender={isRender}
-            setRender={setRender}
-          />
+          <Suspense fallback={<Loading />}>
+            <ProductScene 
+              product={product}
+              setLoading={setLoading}
+              isRender={isRender}
+              setRender={setRender}
+            />
+          </Suspense>
         </div>
-      ) : <Loading /> }
+      ) }
     </React.Fragment>
     )
 }

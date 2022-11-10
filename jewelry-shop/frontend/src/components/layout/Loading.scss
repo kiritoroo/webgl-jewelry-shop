@@ -1,5 +1,8 @@
 @import "../../styles/variables";
 
+$cubesize: 40px;
+$halfcubesize: 19px;
+
 .Loading {
   width: 100%;
   height: 100%;
@@ -11,41 +14,41 @@
   background-color: $white;
   z-index: 99999;
   &-cube {
-    width: 30px;
-    height: 30px;
+    width: $cubesize;
+    height: $cubesize;
     position: absolute;
     transform-style: preserve-3d;
     animation: rotatecube 5s infinite;
     &__front, &__back, &__right, &__left, &__top, &__bottom {
-      width: 30px;
-      height: 30px;
+      width: $cubesize;
+      height: $cubesize;
       display: block;
       position: absolute;
       border: 0.2rem solid $pink;
-      line-height: 30px;
+      line-height: $cubesize;
       text-align: center;
-      font-size: 30px;
+      font-size: $cubesize;
       font-weight: bold;
-      border-radius: 5px;
+      border-radius: 2px;
       opacity: 1;
     }
     &__front {
-      transform: rotateY(0deg) translateZ(16px);
+      transform: rotateY(0deg) translateZ($halfcubesize);
     }
     &__back {
-      transform: rotateX(180deg) translateZ(16px);
+      transform: rotateX(180deg) translateZ($halfcubesize);
     }
     &__left {
-      transform: rotateY(-90deg) translateZ(16px);
+      transform: rotateY(-90deg) translateZ($halfcubesize);
     }
     &__right {
-      transform: rotateY(90deg) translateZ(16px);
+      transform: rotateY(90deg) translateZ($halfcubesize);
     }
     &__top {
-      transform: rotateX(90deg) translateZ(16px);
+      transform: rotateX(90deg) translateZ($halfcubesize);
     }
     &__bottom {
-      transform: rotateX(-90deg) translateZ(16px);
+      transform: rotateX(-90deg) translateZ($halfcubesize);
     }
   }
   &-title {

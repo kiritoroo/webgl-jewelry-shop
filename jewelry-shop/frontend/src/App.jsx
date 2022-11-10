@@ -4,8 +4,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 import HomePage from "./pages/HomePage"
+import ErrorPage from "./pages/ErrorPage"
+
 import ProductsPage from "./pages/ProductsPage"
 import CustomProductPage from "./pages/CustomProductPage"
+
+import AdminPage from "./pages/AdminPage"
+import ProductsList from "./components/admin/ProductsList"
+import NewProduct from "./components/admin/NewProduct"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +45,12 @@ const App = () => {
               <Route exact path="/" element={ <HomePage/> } />
               <Route exact path="/products" element={ <ProductsPage/> } />
               <Route exact path="/product/:prodId" element={<CustomProductPage/>} />
+
+              <Route path="/admin" element={<AdminPage/>} />
+              <Route path="/admin/products" element={<ProductsList/>} />
+              <Route path="/admin/product/" element={<NewProduct/>} />
+
+              <Route path="*" element={<ErrorPage/>} />
             </Routes>
           </AnimatePresence>
         </motion.div>

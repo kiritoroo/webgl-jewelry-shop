@@ -134,7 +134,7 @@ const DiamondScene = ({ setLoading, isRender, setRender }) => {
           shadows 
           dpr={[1, 2]}
           camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
-          frameloop= { isRender ? "always" : "never" }
+          frameloop= { isRender ? "never" : "never" }
           onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
           gl={{ antialias: true }}
         >

@@ -13,11 +13,12 @@
   text-align: center;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
   &-logo {
-    padding: 10px 5%;
+    padding: 10px 1%;
+    padding-right: 5%;
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 100%;
@@ -27,7 +28,7 @@
     user-select: none;
   }
   &-link {
-    padding: 10px 5%;
+    padding: 10px 1%;
     font-size: 1.0em;
     font-weight: 500;
     letter-spacing: 3px;
@@ -36,10 +37,11 @@
     text-decoration: none;
     color: #000000;
     transition: color 0.2s ease;
-  }
-  :hover {
-    color: $pink;
-    font-weight: 500;
+
+    &:hover {
+      color: $pink;
+      font-weight: 500;
+    }
   }
 
   &__top {
@@ -47,5 +49,13 @@
   }
   &__bottom {
     position: absolute;
+  }
+
+  &-icon--wrapper {
+    margin-left: 40px;
+    margin-right: 20px;
+  }
+  &-icon {
+    padding: 10px 20px;
   }
 }
