@@ -1,0 +1,50 @@
+@import '../../styles/variables';
+
+.HomeTypo {
+  pointer-events: none;
+  position: absolute;
+  top: 55%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  &-first {
+    position: absolute;
+    color: #ff9b9b;
+    top: 40%;
+    left: 30%;
+    transform: translateY(-80%);
+    opacity: 0.5;
+    font-weight: 600;
+    font-size: 25rem;
+    line-height: 100%;
+    letter-spacing: -0.05em;
+    font-family: $qwitcher;
+    z-index: -1 !important;
+  }
+  > div:nth-child(2) {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > div {
+      text-align: center;
+      color: #ffffff;
+    }
+    .HomeTypo-second {
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+      line-height: 4rem;
+      font-size: 8rem;
+      letter-spacing: 0.5rem;
+      white-space: inherit;
+      font-family: $playfair;
+    }
+    .HomeTypo-third {
+      font-size: 3rem;
+      font-weight: 200;
+      font-family: $cormorant;
+    }
+  }
+}

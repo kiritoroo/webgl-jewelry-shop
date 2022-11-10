@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  overscroll-behavior: none;
+  /* background: #efefef; */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 10vw;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.7em;
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-family: Cormorant Garamond;
+  user-select: none;
+  transition: color 1s ease;
+  padding-bottom: 15px;
+}
+
+h1:hover {
+  cursor: pointer;
+  /* color: #f6b1b1; */
+}
+
+a {
+  user-select: none;
+  pointer-events: all;
+  color: black;
+  text-decoration: none;
+}
+
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 2.5fr 50px;
+  grid-template-columns: 2fr 1.27fr 1.73fr;
+  z-index: -1;
+}
+.background-border-horizontal {
+  grid-row: 2;
+  grid-column: 1/-1;
+  border-top: 1px solid #f6b1b1;
+  border-bottom: 1px solid #f6b1b1;
+}
+.background-border-vertical {
+  grid-row: 1/-1;
+  grid-column: 2;
+  border-left: 1px solid #f6b1b1;
+  border-right: 1px solid #f6b1b1;
+}
+
+/* Underline effect */
+.fx-underline {
+  position: relative;
+}
+.fx-underline::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 97%;
+  height: 8px;
+  background-color: #f6b1b1;
+  transform: scaleX(0%);
+  transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.fx-underline::before {
+  transform-origin: 100% 0;
+}
+.fx-underline:hover::before {
+  transform: scaleX(100%);
+  transform-origin: 0 0;
+}
+
+/* Wave effect */
+.fx-wave {
+  mask-image: linear-gradient(
+    -75deg,
+    rgba(0, 0, 0, 0.3) 30%,
+    #000 50%,
+    rgba(0, 0, 0, 0.2) 90%
+  );
+  -webkit-mask-image: linear-gradient(
+    -75deg,
+    rgba(0, 0, 0, 0.3) 30%,
+    #000 50%,
+    rgba(0, 0, 0, 0.2) 90%
+  );
+  mask-size: 200%;
+  -webkit-mask-size: 200%;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  from {
+    -webkit-mask-position: 150%;
+  }
+  to {
+    -webkit-mask-position: -50%;
+  }
+}

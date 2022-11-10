@@ -1,0 +1,74 @@
+@import "../../styles/variables";
+
+.Loading {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: $white;
+  z-index: 99999;
+  &-cube {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: rotatecube 5s infinite;
+    &__front, &__back, &__right, &__left, &__top, &__bottom {
+      width: 30px;
+      height: 30px;
+      display: block;
+      position: absolute;
+      border: 0.2rem solid $pink;
+      line-height: 30px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      border-radius: 5px;
+      opacity: 1;
+    }
+    &__front {
+      transform: rotateY(0deg) translateZ(16px);
+    }
+    &__back {
+      transform: rotateX(180deg) translateZ(16px);
+    }
+    &__left {
+      transform: rotateY(-90deg) translateZ(16px);
+    }
+    &__right {
+      transform: rotateY(90deg) translateZ(16px);
+    }
+    &__top {
+      transform: rotateX(90deg) translateZ(16px);
+    }
+    &__bottom {
+      transform: rotateX(-90deg) translateZ(16px);
+    }
+  }
+  &-title {
+    margin-top: 6.5rem;
+    font-weight: 500;
+    line-height: 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    font-family: Cormorant Garamond;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+@keyframes rotatecube {
+  0% {
+    transform: rotateX(315deg) rotateY(180deg) rotateZ(225deg);
+  }
+  50% {
+    transform: rotateX(45deg) rotateY(0deg) rotateZ(135deg);
+  }
+  100% {
+    transform: rotateX(315deg) rotateY(180deg) rotateZ(225deg);
+  }
+}
