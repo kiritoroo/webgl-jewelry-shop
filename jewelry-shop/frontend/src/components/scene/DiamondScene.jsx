@@ -134,7 +134,7 @@ const DiamondScene = ({ setLoading, isRender, setRender }) => {
           shadows 
           dpr={[1, 2]}
           camera={{ position: [0, 0, 15], near: 0.1, far: 50, fov: 50 }}
-          frameloop= { isRender ? "never" : "never" }
+          frameloop= { isRender ? "always" : "never" }
           onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
           gl={{ antialias: true }}
         >
@@ -157,7 +157,7 @@ const DiamondScene = ({ setLoading, isRender, setRender }) => {
             <directionalLight position={[0, -5, 0]} color="pink" intensity={2} />
             <Lights />
             <Environment files='/textures/hdr_aerodynamic.hdr' />
-          {/* <Effect /> */}
+          <Effect />
         </Canvas> 
       </Suspense>
     </>

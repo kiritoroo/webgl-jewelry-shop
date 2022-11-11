@@ -48,7 +48,7 @@ const newProduct = catchAsyncErrors(async (req, res, next) => {
 
   if (!images || !model_3d) {
     return next(new ErrorHandler('No images & model data', 404));
-}
+  }
 
   const images_data = []
   // save image

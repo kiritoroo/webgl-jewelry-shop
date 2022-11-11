@@ -1,5 +1,5 @@
-import React, { useState} from 'react'
 import * as THREE from 'three'
+import React, { useState} from 'react'
 import { Canvas, useThree, useFrame, useLoader } from '@react-three/fiber'
 import { Environment, OrbitControls, useGLTF, MeshRefractionMaterial, Reflector } from '@react-three/drei'
 import { RGBELoader } from 'three-stdlib'
@@ -10,12 +10,13 @@ import { useControls } from 'leva'
 const Model = ({ uri, map, ...props }) => {
   const { nodes, materials } = useGLTF(uri);
   const [ringColor, setRingColor] = useState("#ffaeae")
+  const [diamondColor, setDiamondColor] = useState("#fff")
 
   const configDiamond = ({
     bounces: 1,
-    aberrationStrength: 0.10,
-    ior: 5.0,
-    fresnel: 0.5,
+    aberrationStrength: 0.05,
+    ior: 1.0,
+    fresnel: 0.2,
     color: 'white',
     fastChroma: false
   })
@@ -31,7 +32,7 @@ const Model = ({ uri, map, ...props }) => {
         depthScale={1}
         minDepthThreshold={0.8}
         maxDepthThreshold={1}
-        position={[1, -5, 8]}
+        position={[1, -8, 8]}
         scale={[2, 2, 1]}
         rotation={[-Math.PI / 2, 0, Math.PI]}
         args={[70, 70]}>
@@ -42,7 +43,8 @@ const Model = ({ uri, map, ...props }) => {
         castShadow
         receiveShadow
         geometry={nodes.diamonds.geometry}
-        // material={materials.diamonds}
+        material={materials.diamonds}
+        material-color={diamondColor}
       >
         {/* <MeshRefractionMaterial envMap={map} {...configDiamond} toneMapped={false}/> */}
       </mesh>
@@ -119,19 +121,35 @@ const ProductScene = ({ product, setLoading, isRender, setRender }) => {
   const texture = useLoader(RGBELoader, '/textures/hdr_aerodynamic.hdr')
 
   return (
-    <Canvas shadows camera={{ position: [-10, 10, 30], fov: 25 }}>
-      <fog attach="fog" args={["#F5F5F5", 1, 100]}/>
-      <color attach="background" args={['#F5F5F5']}/>
+    <Canvas 
+      shadows 
+      camera={{ position: [-10, 10, 25], near: 0.1, far: 50, fov: 30 }}
+      frameloop= { isRender ? "always" : "never" }
+      onCreated={({ gl }) => (gl.toneMappingExposure = 1.5)}
+      gl={{ antialias: true }}
+    >
+      <fog attach="fog" args={["#FFF", 1, 80]}/>
+      <color attach="background" args={['#FFFDFD']}/>
       <ambientLight intensity={0.5}/>
-      <Model 
-        uri={product.model_3d.url}
-        map={texture}
-        onLoad={setTimeout(() => {
-          setRender(true)
-          setLoading(false)
-        }, 2000)}  
-      />
+      <group>
+        <Model 
+          uri={product.model_3d.url}
+          map={texture}
+          scale={[0.8, 0.8, 0.8]}
+          position={[0, -0.5, 0]}
+          onLoad={setTimeout(() => {
+            setRender(true)
+            setLoading(false)
+          }, 2000)}  
+        />   
+      </group>
+      <spotLight position={[-10, 50,- 100]} castShadow />
+      <pointLight position={[-10, -10, -10]} color="pink" intensity={0.2} />
+      <pointLight position={[0, -5, 5]} intensity={0.5} />
       <directionalLight intensity={20} position={[5, 5, -7.5]} bias={0.01} />
+      <Lights />
+      <Environment files='/textures/hdr_aerodynamic.hdr' />
+      <Effect />
       <OrbitControls 
         minPolarAngle={0} 
         maxPolarAngle={Math.PI / 2.1} 
@@ -142,9 +160,6 @@ const ProductScene = ({ product, setLoading, isRender, setRender }) => {
         enableZoom={false}
         enableRotate={true}
       />
-      <Lights />
-      <Environment files='/textures/hdr_aerodynamic.hdr' />
-      {/* <Effect /> */}
     </Canvas>
   )
 }

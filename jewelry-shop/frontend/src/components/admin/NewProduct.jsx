@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import SideBar from './SideBar'
 
 import { useDispatch, useSelector } from "react-redux";
 import { newProduct, clearErrors } from '../../redux/product/productActions';
+import { NEW_PRODUCT_RESET } from '../../redux/product/productConstants';
 
-const NewProduct = () => {
-  const dispatch = useDispatch();
+import { useNavigate } from 'react-router-dom';
+
+const NewProduct = ({ history }) => {
+  const notify_success = () => toast.success('Create products success !');
+  const notify_error = () => toast.error('Create products failed !');
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const categories = [
     "Engagement",
@@ -24,6 +32,24 @@ const NewProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const [model_3d, setModel3D] = useState("")
+
+  const { loading, error, success } = useSelector((state) => state.newProduct)
+
+  useEffect(() => {
+    if (error) {
+      notify_error()
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      notify_success()
+      dispatch({ type: NEW_PRODUCT_RESET })
+
+      setTimeout(() => {
+        navigate("/admin/products")
+      }, 2000)
+    }
+  }, [dispatch, error, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -99,6 +125,7 @@ const NewProduct = () => {
                   className="form-control"
                   value={productData.name}
                   onChange={(e) => onDataChange('name', e.target.value)}
+                  required
                 />
               </div>
 
@@ -109,6 +136,7 @@ const NewProduct = () => {
                   className="form-control"
                   value={productData.price}
                   onChange={(e) => onDataChange('price', e.target.value)}
+                  required
                 />
               </div>
               
@@ -119,6 +147,7 @@ const NewProduct = () => {
                   className="form-control"
                   value={productData.description}
                   onChange={(e) => onDataChange('description', e.target.value)}
+                  required
                 />
               </div>
 
@@ -146,6 +175,7 @@ const NewProduct = () => {
                   name="product_images"
                   multiple
                   onChange={(e) => onUploadImage(e)}
+                  required
                 />
                 <span className="input-group-text">Images</span>
               </div>
@@ -157,6 +187,7 @@ const NewProduct = () => {
                   accept=".glb, .gltf" 
                   name="product_model"
                   onChange={(e) => onUploadModel(e)}
+                  required
                 />
                 <span className="input-group-text">3D Model</span>
               </div>
@@ -184,6 +215,19 @@ const NewProduct = () => {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </React.Fragment>
   )
 }

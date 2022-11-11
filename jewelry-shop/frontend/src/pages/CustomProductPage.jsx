@@ -14,7 +14,7 @@ import './CustomProductPage.scss'
 const CustomProductPage = () => {
   const { prodId } = useParams()
   const [isLoading, setLoading] = useState(true)
-  const [isRender, setRender] = useState(false)
+  const [isRender, setRender] = useState(true)
 
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const CustomProductPage = () => {
       { !loading && (
         <div className='CustomePage'>
           <CircleButton to="/products"/>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={null}>
             <ProductScene 
               product={product}
               setLoading={setLoading}

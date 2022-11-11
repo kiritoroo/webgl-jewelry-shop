@@ -108,6 +108,7 @@ function Products({ products }) {
 const ProductsPage = () => {
   const dispatch = useDispatch()
   const { loading, products, error } = useSelector(state => state.products)
+  // const [ isLoading, setLoading ] = useState(true)
 
   // const notify_success = () => toast.success('Loading products success !');
   // const notify_error = () => toast.error('Loading products failed !');
@@ -117,9 +118,13 @@ const ProductsPage = () => {
     dispatch(getProducts())
 
     // if (error) { notify_error() }
-    // if (!loading) { notify_success() }
+    // if (!loading) { 
+    //   setTimeout(() => {
+    //     setLoading(false)
+    //   }, 1000)
+    // }
 
-  }, [dispatch])
+  }, [dispatch, error])
 
   const offsetWidth = 100;
 
@@ -139,8 +144,11 @@ const ProductsPage = () => {
         variants={variants}
       >
         { !loading &&
-        <Canvas gl={{ antialias: false }} dpr={[1, 1.5]}>
-          <Suspense fallback={null}>
+        <Suspense fallback={<Loading />}>
+          <Canvas
+            gl={{ antialias: false }} 
+            dpr={[1, 1.5]}
+          >
             <ScrollControls 
               infinite 
               horizontal 
@@ -149,7 +157,9 @@ const ProductsPage = () => {
               distance={0.8}
             >
               <Scroll>
-                <Products products={ products } />
+                <Products 
+                  products={ products } 
+                />
               </Scroll>
               <Scroll html>
                 <h1 style={{ left: '-75vw' }} />
@@ -177,8 +187,8 @@ const ProductsPage = () => {
               </Scroll>
             </ScrollControls>
             <Preload />
-          </Suspense>
-        </Canvas> }
+          </Canvas> 
+        </Suspense> }
       </motion.div>
 
       {/* <ToastContainer
