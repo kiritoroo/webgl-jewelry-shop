@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
+    "dev": "SET NODE_ENV=DEVELOPMENT& concurrently \"cd frontend && npm run dev\" \"nodemon backend/server.js\"",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server",
     "docs": "SET NODE_ENV=DEVELOPMENT& node backend/utils/swagger.js",
     "seed": "node backend/utils/seeder.js"
@@ -28,5 +28,8 @@
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.1.4",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.5.0"
   }
 }
