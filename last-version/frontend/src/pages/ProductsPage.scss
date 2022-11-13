@@ -1,0 +1,72 @@
+@import "../styles/variables";
+
+.ProductPage {
+  height: 100vh;
+  width: 100vw;
+  background-color: $white;
+  overflow-x: hidden;
+  h1 {
+    position: absolute; 
+    top: 20vh;
+    margin: 0;
+    padding: 0;
+    font-size: 10vw;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.7em;
+    color: rgb(66, 66, 66);
+    font-family: $cormorant;
+    user-select: none;
+    transition: color 1s ease;
+    padding-bottom: 15px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.ProductPage-btn {
+  top: 75vh;
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  width: 300px;
+  height: 100px;
+  margin: 1rem auto;
+  text-transform: uppercase;
+  border: 3px solid #ffb6c2;
+  text-align: center;
+  font-family: $cormorant;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-decoration: none;
+  line-height: 100px;
+  letter-spacing: 0.15em;
+  color: rgb(71, 71, 71);
+  transform: translateX(-52%);
+  transition: color 0.5s ease;
+
+  span {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: #ffeae7;
+    transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  &:hover {
+    color: #FFB6C2;
+    span {
+      width: 225%;
+      height: 562.5px;
+    }
+  }
+  &:active {
+    span {
+      background-color: #fff3f5;
+    }
+  }
+}

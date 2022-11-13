@@ -1,0 +1,79 @@
+$btn-color: #ffaeae;
+$btn-color-hover: #ff7676;
+$triangleSize: 6px;
+
+.CircleButton {
+  position: absolute;
+  cursor: pointer;
+  z-index: 99;
+
+  &-outer {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    transition: 
+      transform .5s cubic-bezier(1,0,.25,1), 
+      opacity .5s cubic-bezier(.5,0,0,1),
+      -webkit-transform .5s cubic-bezier(.5,0,0,1);
+  }
+  &-icon {
+    position: absolute;
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
+    width: 75%;
+    height: 8px;
+    transform: translateX(0) translateZ(0);
+    transition: transform .5s cubic-bezier(1,0,.25,1);
+    will-change: transform;
+  }
+  &-bar {
+    width: 200px;
+    height: 3px;
+    width: 100%;
+    background-color: $btn-color;
+    position: absolute;
+    top: 3px;
+    transform: translateZ(0);
+    transform-origin: 0 0;
+    transition: 
+      background-color .5s cubic-bezier(1,0,.25,1),
+      transform .5s cubic-bezier(1,0,.25,1),
+      opacity .5s cubic-bezier(1,0,.25,1);
+    will-change: transform opacity;
+  }
+  &-triangle {
+    border-bottom: solid $triangleSize transparent;
+    border-right: solid $triangleSize transparent;
+    border-left: solid $triangleSize $btn-color;
+    border-top: solid $triangleSize $btn-color;
+    transform: rotate(-45deg) translateX(-$triangleSize);
+    transform-origin: calc(50% - 6px) 0;
+    transition: .3s ease, border .5s cubic-bezier(1,0,.25,1);
+    width: 0;
+    height: 0;
+  }
+
+  &:hover {
+    .CircleButton-outer {
+      transform: translateX(-8px) translateZ(0);
+    }
+    .CircleButton-icon {
+      transform: translateX(-8px);
+    }
+    .CircleButton-bar {
+      background-color: $btn-color-hover;
+      transform: scaleX(.55);
+    }
+    .CircleButton-triangle {
+      border-left: solid $triangleSize $btn-color-hover;
+      border-top: solid $triangleSize $btn-color-hover;
+    }
+  }
+
+  &:focus {
+    &-outer {
+      border-width: 5px;
+    }
+  }
+}

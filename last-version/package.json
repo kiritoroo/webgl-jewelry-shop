@@ -1,0 +1,32 @@
+{
+  "name": "last-version",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server",
+    "docs": "SET NODE_ENV=DEVELOPMENT& node backend/utils/swagger.js",
+    "seed": "node backend/utils/seeder.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mgr-swagger-express": "^0.0.6",
+    "mongoose": "^6.7.2",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.1.4",
+    "validator": "^13.7.0"
+  }
+}

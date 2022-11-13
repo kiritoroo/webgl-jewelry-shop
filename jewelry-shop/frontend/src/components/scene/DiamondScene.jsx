@@ -157,7 +157,7 @@ const DiamondScene = ({ setLoading, isRender, setRender }) => {
             <directionalLight position={[0, -5, 0]} color="pink" intensity={2} />
             <Lights />
             <Environment files='/textures/hdr_aerodynamic.hdr' />
-          <Effect />
+          {/* <Effect /> */}
         </Canvas> 
       </Suspense>
     </>
